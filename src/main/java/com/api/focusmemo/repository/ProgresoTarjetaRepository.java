@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Repository
 public interface ProgresoTarjetaRepository extends JpaRepository<ProgresoTarjeta, Long> {
-    Optional<ProgresoTarjeta> findByUsuarioIdUsuarioAndTarjetaIdTarjeta(Long idUsuario, Long idTarjeta);
+    Optional<ProgresoTarjeta> findByIdUsuarioAndIdTarjeta(Long idUsuario, Long idTarjeta);
 }
