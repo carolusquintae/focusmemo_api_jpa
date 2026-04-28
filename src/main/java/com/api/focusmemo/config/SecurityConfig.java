@@ -23,12 +23,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                  .csrf(csrf -> csrf.disable())
-                 .authorizeHttpRequests(auth ->
-                     auth
-                         .requestMatchers("/api/v1/usuarios").permitAll()
-                         .anyRequest().authenticated()
-                 )
-                 .httpBasic(Customizer.withDefaults())
+                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
+                 .httpBasic(configurer -> configurer.disable())
+                 .formLogin(configurer -> configurer.disable())
                  .build();
     }
 }

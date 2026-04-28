@@ -29,6 +29,11 @@ public class UsuarioController {
                             .toUri();
         return ResponseEntity.created(location).body(creado);
     }
+    
+    @PostMapping("/login")
+    public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioRegistroDTO loginDTO) {
+        return ResponseEntity.ok(usuarioService.login(loginDTO));
+    }
 
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {

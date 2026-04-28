@@ -77,7 +77,20 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario = usuarioRepository.save(usuario);
         return mapToDTO(usuario);
     }
-
+    
+    @Override
+    public UsuarioDTO login(UsuarioRegistroDTO loginDTO) {
+        Usuario usuario = usuarioRepository
+                            .findByEmail(loginDTO.email())
+                            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        if (!passwordEncoder.matches(loginDTO.password(), usuario.getPasswordHash())) {
+            throw new RuntimeException("Contraseña incorrecta");
+        }
+        
+        return mapToDTO(usuario);
+    }
+    
     @Override
     @Transactional
     public void eliminar(Long id) {

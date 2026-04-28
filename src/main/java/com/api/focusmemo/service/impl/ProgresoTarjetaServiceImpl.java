@@ -25,7 +25,7 @@ public class ProgresoTarjetaServiceImpl implements ProgresoTarjetaService {
     @Transactional
     public ProgresoTarjetaDTO upsert(ProgresoTarjetaDTO dto) {
         ProgresoTarjeta progreso = repo
-                                    .findByIdUsuarioAndIdTarjeta(dto.idUsuario(), dto.idTarjeta())
+                                    .buscarPorIds(dto.idUsuario(), dto.idTarjeta())
                                     .orElse(null);
 
         if (progreso == null) {
@@ -55,7 +55,7 @@ public class ProgresoTarjetaServiceImpl implements ProgresoTarjetaService {
     @Transactional(readOnly = true)
     public ProgresoTarjetaDTO buscarPorUsuarioYTarjeta(Long idUsuario, Long idTarjeta) {
         ProgresoTarjeta p = repo
-                             .findByIdUsuarioAndIdTarjeta(idUsuario, idTarjeta)
+                             .buscarPorIds(idUsuario, idTarjeta)
                              .orElseThrow(() -> new ResourceNotFoundException("Progreso no encontrado"));
         return mapToDTO(p);
     }
