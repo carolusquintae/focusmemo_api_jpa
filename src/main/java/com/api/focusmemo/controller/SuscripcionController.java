@@ -23,4 +23,10 @@ public class SuscripcionController {
     public ResponseEntity<List<SuscripcionDTO>> listar(@PathVariable Long uId) {
         return ResponseEntity.ok(service.listarPorUsuario(uId));
     }
+    
+    @DeleteMapping("/suscripciones/{id}")
+    public ResponseEntity<Void> borrar(@PathVariable Long id) {
+        service.borrar(id);
+        return ResponseEntity.noContent().build();
+    }
 }

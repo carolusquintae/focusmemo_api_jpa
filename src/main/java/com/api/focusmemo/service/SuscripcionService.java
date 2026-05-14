@@ -4,4 +4,5 @@ import java.util.List;
 public interface SuscripcionService {
     SuscripcionDTO guardar(SuscripcionDTO dto);
     List<SuscripcionDTO> listarPorUsuario(Long idUsuario);
+    void borrar(Long idSuscripcion);
 }

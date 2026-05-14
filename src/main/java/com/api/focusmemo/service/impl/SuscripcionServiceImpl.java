@@ -1,6 +1,7 @@
 package com.api.focusmemo.service.impl;
 
 import com.api.focusmemo.dto.SuscripcionDTO;
+import com.api.focusmemo.exception.ResourceNotFoundException;
 import com.api.focusmemo.model.Suscripcion;
 import com.api.focusmemo.model.Usuario;
 import com.api.focusmemo.repository.SuscripcionRepository;
@@ -38,8 +39,16 @@ public class SuscripcionServiceImpl implements SuscripcionService {
     public List<SuscripcionDTO> listarPorUsuario(Long idUsuario) {
         return repo
                 .findByUsuarioIdUsuario(idUsuario)
-            .stream().map(s -> this.mapToDTO(s))
-            .collect(Collectors.toList());
+                .stream().map(s -> this.mapToDTO(s))
+                .collect(Collectors.toList());
+    }
+    
+    @Override
+    public void borrar(Long idSuscripcion) {
+        if (!repo.existsById(idSuscripcion)) {
+            throw new ResourceNotFoundException("Suscripcion no encontrada con ID: " + idSuscripcion);
+        }
+        repo.deleteById(idSuscripcion);
     }
     
     private SuscripcionDTO mapToDTO(Suscripcion s) {
