@@ -1,5 +1,6 @@
 package com.api.focusmemo.service.impl;
 
+import com.api.focusmemo.dto.PasswordRequestDTO;
 import com.api.focusmemo.dto.UsuarioDTO;
 import com.api.focusmemo.dto.UsuarioRegistroDTO;
 import com.api.focusmemo.exception.BusinessConflictException;
@@ -99,7 +100,22 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         usuarioRepository.deleteById(id);
     }
-
+    
+    @Override
+    @Transactional
+    public void cambiarPassword(Long id, PasswordRequestDTO passwordRequestDTO) {
+        Usuario usuario = usuarioRepository
+                            .findById(id)
+                            .orElseThrow(() -> new BusinessConflictException("Usuario no encontrado con ID: " + id));
+        
+        if (!passwordEncoder.matches(passwordRequestDTO.passwordAntigua(), usuario.getPasswordHash())) {
+            throw new BusinessConflictException("La contraseña actual no es correcta");
+        }
+        
+        usuario.setPasswordHash(passwordEncoder.encode(passwordRequestDTO.passwordAntigua()));
+        usuarioRepository.save(usuario);
+    }
+    
     private UsuarioDTO mapToDTO(Usuario usuario) {
         return UsuarioDTO.builder()
                     .idUsuario(usuario.getIdUsuario())

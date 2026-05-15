@@ -1,5 +1,6 @@
 package com.api.focusmemo.controller;
 
+import com.api.focusmemo.dto.PasswordRequestDTO;
 import com.api.focusmemo.dto.UsuarioDTO;
 import com.api.focusmemo.dto.UsuarioRegistroDTO;
 import com.api.focusmemo.service.UsuarioService;
@@ -34,7 +35,13 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> login(@RequestBody UsuarioRegistroDTO loginDTO) {
         return ResponseEntity.ok(usuarioService.login(loginDTO));
     }
-
+    
+    @PostMapping("/{id}/password")
+    public ResponseEntity<Void> cambiarPassword(@PathVariable Long id, @Valid @RequestBody PasswordRequestDTO passwordRequestDTO) {
+        usuarioService.cambiarPassword(id, passwordRequestDTO);
+        return ResponseEntity.noContent().build();
+    }
+    
     @GetMapping
     public ResponseEntity<List<UsuarioDTO>> listar() {
         return ResponseEntity.ok(usuarioService.listarTodos());
@@ -49,6 +56,7 @@ public class UsuarioController {
     public ResponseEntity<UsuarioDTO> actualizar(@PathVariable Long id, @Valid @RequestBody UsuarioDTO usuarioDTO) {
         return ResponseEntity.ok(usuarioService.actualizar(id, usuarioDTO));
     }
+    
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> eliminar(@PathVariable Long id) {

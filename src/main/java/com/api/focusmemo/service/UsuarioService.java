@@ -1,5 +1,6 @@
 package com.api.focusmemo.service;
 
+import com.api.focusmemo.dto.PasswordRequestDTO;
 import com.api.focusmemo.dto.UsuarioDTO;
 import com.api.focusmemo.dto.UsuarioRegistroDTO;
 
@@ -12,4 +13,5 @@ public interface UsuarioService {
     UsuarioDTO actualizar(Long id, UsuarioDTO usuarioDTO);
     UsuarioDTO login(UsuarioRegistroDTO loginDTO);
     void eliminar(Long id);
+    void cambiarPassword(Long id, PasswordRequestDTO passwordRequestDTO);
 }
